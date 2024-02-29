@@ -1,0 +1,22 @@
+name: Generate and Publish SBOM
+
+on: 
+  push:
+  release:
+    types: [created]
+
+jobs:
+  sbom:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Generate SBOM with Anchore
+      uses: anchore/sbom-action@v0.15.8
+
+    - name: Publish SBOMs as Release Assets
+      if: github.event_name == 'release' && github.event.action == 'created'
+      uses: anchore/sbom-action/publish-sbom@v0
+      with:
+        sbom-artifact-match: ".*\\.spdx$"
