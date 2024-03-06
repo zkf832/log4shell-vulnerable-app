@@ -19,13 +19,13 @@ jobs:
         run: curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
 
       - name: Generate SBOM in CycloneDX format
-        run: syft packages dir:/path/to/project -o cyclonedx-json=sbom.json
+        run: syft . -o cyclonedx-json=log4shell-vulnerable-app-CDX.json
 
       - name: Upload SBOM as an artifact
         uses: actions/upload-artifact@v2
         with:
           name: SBOM
-          path: sbom.json
+          path: log4shell-vulnerable-app-CDX.json
 
   vulnerability-analysis:
     needs: generate-sbom
@@ -43,4 +43,4 @@ jobs:
         run: curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
 
       - name: Run vulnerability analysis
-        run: grype sbom:sbom.json -o table
+        run: grype sbom:log4shell-vulnerable-app-CDX.json -o table
