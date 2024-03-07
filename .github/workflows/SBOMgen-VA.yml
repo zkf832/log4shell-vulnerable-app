@@ -19,7 +19,7 @@ jobs:
         run: curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
 
       - name: Generate SBOM in CycloneDX format
-        run: syft . -o cyclonedx-json=log4shell-vulnerable-app-CDX.json
+        run: syft log4shell-vulnerable-app/src/main/ -o cyclonedx-json=log4shell-vulnerable-app-CDX.json
 
       - name: Upload SBOM as an artifact
         uses: actions/upload-artifact@v2
