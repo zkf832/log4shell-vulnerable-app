@@ -22,7 +22,7 @@ jobs:
         run: syft . -o cyclonedx-json=log4shell-vulnerable-app-CDX.json
       
       - name: Generate SBOM in console
-        run: syft . -o
+        run: syft .
         
       - name: Upload SBOM as an artifact
         uses: actions/upload-artifact@v2
