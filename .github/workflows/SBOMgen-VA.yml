@@ -26,6 +26,13 @@ jobs:
         with:
           name: SBOM
           path: log4shell-vulnerable-app-CDX.json
+      - name: Commit SBOM to repository
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add log4shell-vulnerable-app-CDX.json
+          git commit -m "Add SBOM for log4shell-vulnerable-app"
+          git push
 
   vulnerability-analysis:
     needs: generate-sbom
